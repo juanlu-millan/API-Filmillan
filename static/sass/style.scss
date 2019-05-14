@@ -11,7 +11,7 @@ $brand-secondary: #118DF0;
 $brand-special: #00ffa3;
 
 $brand-white: #fff;
-$brand-black: #000;
+$brand-black: #f9bc50;
 $brand-darker: #444;
 $brand-gray: #ccc;
 $brand-lighter: #e9e9e9;
@@ -138,7 +138,7 @@ body {
 	}
 }
 a {
-	color: $brand-primary;
+	color: #f9bc50;
 	@include transition(.5s);
 	&:hover, &:active, &:focus {
 		color: $brand-primary;
@@ -223,10 +223,10 @@ h1, h2, h3, h4, h5, h6, figure {
 			a {
 				font-size: 16px;
 				padding: 30px 10px;
-				color: #3ac1bc;
+				color: #f9bc50;
 				@include transition(.5s);
 				&:hover,&:focus, &:active {
-					color: #33a3bd;
+					color: #f9bc50;
 				}
 			}
 			&.has-dropdown {
@@ -285,7 +285,7 @@ h1, h2, h3, h4, h5, h6, figure {
 						a {
 							padding: 2px 0;
 							display: block;
-							color: lighten($brand-black, 60%);
+							color: lighten(#f9bc50, 60%);
 							line-height: 1.2;
 							text-transform: none;
 							font-size: 15px;
@@ -295,7 +295,7 @@ h1, h2, h3, h4, h5, h6, figure {
 						}
 						&.active {
 							> a {
-								color: $brand-black!important;
+								color: #f9bc50 !important;
 							}
 						}
 					}
@@ -331,7 +331,7 @@ h1, h2, h3, h4, h5, h6, figure {
 			}
 			&.active {
 				> a {
-					color: $brand-black!important;
+					color: #f9bc50 !important;
 				}
 			}
 		}
@@ -487,7 +487,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 		h3 {
 			font-size: 18px;
-			color: #000;
+			color: #f9bc50;
 			text-align: left;
 			position: relative;
 			padding-left: 30px;
@@ -975,7 +975,7 @@ form {
 			&:before {
 				color: lighten($brand-black, 80%);
 				display: block;
-				text-align: center;
+				text-align: centerSS;
 				margin-left: 3px;
 			}
 		}
@@ -1901,4 +1901,7 @@ form {
 	background: none;
 	background: lighten($brand-black, 30%);
 	// border: 2px solid $brand-black;
+}
+a {
+	color: #f9bc50;
 }
