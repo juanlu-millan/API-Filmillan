@@ -464,7 +464,7 @@ h1, h2, h3, h4, h5, h6, figure {
 	}
 }
 .gtco-services {
-	padding: 12em 0;
+	padding: 7em 0;
 
 	.service {
 		margin-left: 10px;
@@ -508,7 +508,7 @@ h1, h2, h3, h4, h5, h6, figure {
 			}
 		}
 		&.changed {
-			bottom: -12em;
+			bottom: -7em;
 			@media screen and (max-width: $screen-sm) {
 				bottom: 0;
 			}
@@ -650,7 +650,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 #gtco-footer {
 	background: lighten($brand-black, 15%);
-	padding: 12em 0 0 0!important;
+	padding: 7em 0 0 0!important;
 	margin-bottom: 0!important;
 	width: 100%;
 	float: left;
@@ -1489,7 +1489,7 @@ form {
 }
 #gtco-features-3 {
 	position: relative;
-	top: 12em;
+	top: 7em;
 	@media screen and (max-width: $screen-sm) {
 		top: -2em;
 	}
@@ -1615,7 +1615,7 @@ form {
 }
 
 #gtco-portfolio {
-	padding: 12em 0;
+	padding: 7em 0;
 	background: #303841;
 	min-height: 500px;
 	@media screen and (max-width: $screen-sm) {
