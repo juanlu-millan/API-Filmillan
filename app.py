@@ -18,8 +18,11 @@ def inicio():
 	           lista.append({'titulo':i['title'],'poster': i['poster_path']})
 	      return render_template('index.html', lista = lista)
 
-@app.route('/busqueda')
+@app.route('/busqueda', methods = ['GET', 'POST'])
 def busqueda():
+        if request.method == 'GET':
+            return render_template("busqueda.html")
+        else:
             tituloform = request.form['busqueda']
             if tituloform != '':
                 payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
@@ -29,7 +32,7 @@ def busqueda():
                     lista = []
                     for i in search['results']:
                         lista.append({'titulo':i['title'],'poster': i['poster_path']})
-                    return render_template("busqueda.html", lista = lista)
+                return render_template("busqueda.html", lista = lista)
 
 
 # app.run('0.0.0.0',int(port), debug=True)
