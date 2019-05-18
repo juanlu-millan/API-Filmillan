@@ -20,7 +20,16 @@ def inicio():
 
 @app.route('/busqueda')
 def busqueda():
-    return render_template("busqueda.html",)
+            tituloform = request.form['busqueda']
+            if tituloform != '':
+                payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
+                ultimos = requests.get(URL_BASE_TMDB + 'search/movie',  params = payload)
+                if ultimos.status_code == 200:
+                    search = ultimos.json()
+                    lista = []
+                    for i in search['results']:
+                        lista.append({'titulo':i['title'],'poster': i['poster_path']})
+                    return render_template("busqueda.html", lista = lista)
 
 
 # app.run('0.0.0.0',int(port), debug=True)
