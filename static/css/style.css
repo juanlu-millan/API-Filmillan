@@ -71,16 +71,16 @@ h1, h2, h3, h4, h5, h6, figure {
 
 ::-webkit-selection {
   color: #fff;
-  background: #ffffff;
+  background: grey;
 }
 
 ::-moz-selection {
   color: #fff;
-  background: #ffffff;
+  background: grey;
 }
 
 ::selection {
-  color: #fff;
+  color: #000;
   background: #ffffff;
 }
 
@@ -964,9 +964,9 @@ form label {
   font-weight: 300;
 }
 .gtco-heading p {
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.7;
-  color: #898989;
+  color: #000;
 }
 
 #gtco-offcanvas {
@@ -1887,5 +1887,30 @@ form label {
   width: 100%;
   max-height: 120%;
 
+}
+
+.margenfotos {
+  margin-top: 20px;
+}
+
+.fototamanio {
+  width: 300px;
+  height: 440px;
+  border: 1px solid;
+
+}
+
+.titulopeli{
+  max-width: 337px;
+  max-height: 20px;
+
+}
+.single-feature {
+    padding: 30px 15px;
+    text-align: center;
+    margin-bottom: 50px;
+    border: 1px solid;
+    background-color: #f9bc50;
+    max-height: 541px;
 }
 /*# sourceMappingURL=style.css.map */

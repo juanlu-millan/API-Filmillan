@@ -9,9 +9,18 @@
 					<h2>Realiza la búsqueda de una película o serie.</h2>
 					<form>
 						<br />
-              <label>Búsqueda :</label> <input type="text" name="Búsqueda" size="60">
-            <br />
+              <input type="text" name="busqueda" size="60"><br>
+							<input type="radio" name="tipo" value="pelis" checked="checked"> Películas<br>
+							<input type="radio" name="tipo" value="series"> Series<br>
+							<input type="submit" name="Buscar" value="Buscar"/>
+						<br />
         	</form>
+					{% for i in lista %}
+					<div class="col-md-4 single-feature">
+						<h4 class="titulopeli">{{ i['titulo'] }}</h4></th>
+						<td><img src = "https://image.tmdb.org/t/p/w300{{ i['poster'] }}" class="fototamanio" alt='Poster'></td>
+					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
