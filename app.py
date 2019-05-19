@@ -52,7 +52,7 @@ def busqueda():
                             if resultado['poster_path'] != noimg:
                                 lista.append({'titulo':resultado['name'],'poster': resultado['poster_path']})
                             else:
-                                listanoimg.append({'titulo':resultado['title']})
+                                listanoimg.append({'titulo':resultado['name']})
                         return render_template("busqueda.html", lista = lista,listanoimg = listanoimg)
 
 app.run('0.0.0.0',int(port), debug=True)
