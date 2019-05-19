@@ -55,5 +55,5 @@ def busqueda():
                                 listanoimg.append({'titulo':resultado['title']})
                         return render_template("busqueda.html", lista = lista,listanoimg = listanoimg)
 
-#app.run('0.0.0.0',int(port), debug=True)
-app.run(debug=True)
+app.run('0.0.0.0',int(port), debug=True)
+# app.run(debug=True)
