@@ -2,6 +2,8 @@
 
 Página Web que utiliza los datos de https://www.themoviedb.org/
 
+Las funciones principales del proyecto es realizar una página web dinámica utilizando Flask (Framework escrito en Python) para mostrar las últimas películas,realizar busquedas,puntuar y crear listas de películas.
+
 ###  Objetivo
 El objetivo fundamental del proyecto es la realización de una página web alojada en Heroku y creada con el web framework python Flask, que utilizando algún servicio web proporcione una funcionalidad original.
 
