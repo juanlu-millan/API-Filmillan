@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
 
-# port=os.environ["PORT"]
+port = os.environ['PORT']
 language = 'es-ES'
 
 @app.route('/',methods = ['GET'])
@@ -25,15 +25,35 @@ def busqueda():
         else:
             tituloform = request.form['busqueda']
             if tituloform != '':
-                payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
-                ultimos = requests.get(URL_BASE_TMDB + 'search/movie',  params = payload)
-                if ultimos.status_code == 200:
-                    search = ultimos.json()
-                    lista = []
-                    for i in search['results']:
-                        lista.append({'titulo':i['title'],'poster': i['poster_path']})
-                return render_template("busqueda.html", lista = lista)
+                if request.form['tipo'] == 'pelis':
+                    payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
+                    ultimos = requests.get(URL_BASE_TMDB + 'search/movie',  params = payload)
+                    if ultimos.status_code == 200:
+                        search = ultimos.json()
+                        lista = []
+                        listanoimg = []
+                        noimg = None
+                        for resultado in search['results']:
+                            if resultado['poster_path'] != noimg:
+                                lista.append({'titulo':resultado['title'],'poster': resultado['poster_path']})
+                            else:
+                                listanoimg.append({'titulo':resultado['title']})
 
+                        return render_template("busqueda.html", lista = lista, listanoimg = listanoimg)
+                else:
+                    payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
+                    ultimos = requests.get(URL_BASE_TMDB + 'search/tv',  params = payload)
+                    if ultimos.status_code == 200:
+                        search = ultimos.json()
+                        lista = []
+                        listanoimg = []
+                        noimg = None
+                        for resultado in search['results']:
+                            if resultado['poster_path'] != noimg:
+                                lista.append({'titulo':resultado['name'],'poster': resultado['poster_path']})
+                            else:
+                                listanoimg.append({'titulo':resultado['title']})
+                        return render_template("busqueda.html", lista = lista,listanoimg = listanoimg)
 
-# app.run('0.0.0.0',int(port), debug=True)
+#app.run('0.0.0.0',int(port), debug=True)
 app.run(debug=True)
