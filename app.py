@@ -41,7 +41,7 @@ def busqueda():
                             else:
                                 listanoimg.append({'titulo':resultado['title']})
 
-                        return render_template("busqueda.html", lista = lista, listanoimg = listanoimg)
+                        return render_template("busqueda.html", lista = lista, listanoimg = listanoimg, busqueda = tituloform)
                 else:
                     payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
                     ultimos = requests.get(URL_BASE_TMDB + 'search/tv',  params = payload)
@@ -55,7 +55,7 @@ def busqueda():
                                 lista.append({'titulo':resultado['name'],'poster': resultado['poster_path']})
                             else:
                                 listanoimg.append({'titulo':resultado['name']})
-                        return render_template("busqueda.html", lista = lista,listanoimg = listanoimg)
+                        return render_template("busqueda.html", lista = lista,listanoimg = listanoimg, busqueda = tituloform)
 
 
 
