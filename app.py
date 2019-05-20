@@ -5,11 +5,13 @@ app = Flask(__name__)
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
 
 port = os.environ['PORT']
+
 language = 'es-ES'
+key = os.environ['key']
 
 @app.route('/',methods = ['GET'])
 def inicio():
-    pay = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1'}
+    pay = {'api_key': key,'language': language,'page' : '1'}
     ultimos = requests.get(URL_BASE_TMDB + 'movie/now_playing',  params=pay)
     if ultimos.status_code == 200:
 	      cart = ultimos.json()
@@ -26,7 +28,7 @@ def busqueda():
             tituloform = request.form['busqueda']
             if tituloform != '':
                 if request.form['tipo'] == 'pelis':
-                    payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
+                    payload = {'api_key': key,'language': language,'page' : '1','query': tituloform}
                     ultimos = requests.get(URL_BASE_TMDB + 'search/movie',  params = payload)
                     if ultimos.status_code == 200:
                         search = ultimos.json()
@@ -54,6 +56,17 @@ def busqueda():
                             else:
                                 listanoimg.append({'titulo':resultado['name']})
                         return render_template("busqueda.html", lista = lista,listanoimg = listanoimg)
+
+
+
+
+@app.route('/contacto')
+def contacto():
+    return render_template("contact.html")
+
+@app.route('/listas')
+def listas():
+    return render_template("listas.html")
 
 app.run('0.0.0.0',int(port), debug=True)
 # app.run(debug=True)
