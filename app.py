@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
 
-port = os.environ['PORT']
+# port = os.environ['PORT']
 
 language = 'es-ES'
 key = os.environ['key']
@@ -37,13 +37,13 @@ def busqueda():
                         noimg = None
                         for resultado in search['results']:
                             if resultado['poster_path'] != noimg:
-                                lista.append({'titulo':resultado['title'],'poster': resultado['poster_path']})
+                                lista.append({'titulo':resultado['title'],'id':resultado['id'],'poster': resultado['poster_path']})
                             else:
-                                listanoimg.append({'titulo':resultado['title']})
+                                listanoimg.append({'titulo':resultado['title'],'id':resultado['id']})
 
                         return render_template("busqueda.html", lista = lista, listanoimg = listanoimg, busqueda = tituloform)
                 else:
-                    payload = {'api_key': '53bcf930f2611a01d6a893b431703e79','language': language,'page' : '1','query': tituloform}
+                    payload = {'api_key': 'key','language': language,'page' : '1','query': tituloform}
                     ultimos = requests.get(URL_BASE_TMDB + 'search/tv',  params = payload)
                     if ultimos.status_code == 200:
                         search = ultimos.json()
@@ -52,10 +52,20 @@ def busqueda():
                         noimg = None
                         for resultado in search['results']:
                             if resultado['poster_path'] != noimg:
-                                lista.append({'titulo':resultado['name'],'poster': resultado['poster_path']})
+                                lista.append({'titulo':resultado['name'],'id':resultado['id'],'poster': resultado['poster_path']})
                             else:
-                                listanoimg.append({'titulo':resultado['name']})
+                                listanoimg.append({'titulo':resultado['name'],'id':resultado['id']})
                         return render_template("busqueda.html", lista = lista,listanoimg = listanoimg, busqueda = tituloform)
+
+@app.route('/pelicula/<id>')
+def info(id):
+    error = None
+    payload = {'api_key': key,'language': language}
+    info = requests.get(URL_BASE_TMDB + 'movie/' + id,  params = payload)
+    if info.status_code == 200:
+        infopeli = info.json()
+        pelisinfo = {'titulo':infopeli['title'],'poster':infopeli['poster_path'],'sinopsis':infopeli['overview']}
+        return render_template("id.html" , lista = pelisinfo,  error = error)
 
 
 
@@ -68,5 +78,5 @@ def contacto():
 def listas():
     return render_template("listas.html")
 
-app.run('0.0.0.0',int(port), debug=True)
-# app.run(debug=True)
+# app.run('0.0.0.0',int(port), debug=True)
+app.run(debug=True)

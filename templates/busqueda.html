@@ -18,7 +18,7 @@
         	</form>
 					{% for i in lista %}
 					<div class="col-md-4 single-feature">
-						<h4 class="titulopeli">{{ i['titulo'] }}</h4></th>
+						<a  class= titulopeli href="/pelicula/{{ i['id'] }}">{{ i['titulo'] }}</a>
 						<td><img src = "https://image.tmdb.org/t/p/w300{{ i['poster'] }}" class="fototamanio" alt='Poster'></td>
 					</div>
 					{% endfor %}
