@@ -1899,7 +1899,7 @@ form label {
 .fototamanio {
   width: 300px;
   height: 440px;
-  border: 1px solid;
+  border: 2px solid;
 
 }
 
@@ -1912,9 +1912,17 @@ form label {
     padding: 30px 15px;
     text-align: center;
     margin-bottom: 50px;
-    border: 1px solid;
     background-color: #f9bc50;
     max-height: 541px;
+    border: 2px solid;
+
 }
+
+.fotoactor {
+  width: 150px;
+  height: 220px;
+  border: 2px solid;
+}
+
 
 /*# sourceMappingURL=style.css.map */

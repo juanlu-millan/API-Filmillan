@@ -8,11 +8,11 @@
 				<div class="row row-pb-sm">
 					<div class="col-md-12 gtco-heading text-center">
 						<h2>Últimos Lanzamientos</h2>
-						<p>Películas actualmente en Cartelera</p>
+						<h3>Películas actualmente en Cartelera</h3>
 						{% for i in lista %}
 						<div class="col-md-4 single-feature">
-							<h4 class="titulopeli">{{ i['titulo'] }}</h4></th>
-							<td><img src = "https://image.tmdb.org/t/p/w300{{ i['poster'] }}" class="fototamanio" alt='Poster'></td>
+							<a  class= titulopeli href="/pelicula/{{ i['id'] }}">{{ i['titulo'] }}</a>
+							<a  class= titulopeli href="/pelicula/{{ i['id'] }}"><img src = "https://image.tmdb.org/t/p/w300{{ i['poster'] }}" class="fototamanio" alt='Poster'></a>
 						</div>
 						{% endfor %}
 					</div>
