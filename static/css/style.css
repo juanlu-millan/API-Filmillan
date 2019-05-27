@@ -105,6 +105,7 @@ h1, h2, h3, h4, h5, h6, figure {
   padding: 10px 0;
   z-index: 1001;
   background: #111;
+  position: fixed;
 }
 @media screen and (max-width: 768px) {
   .gtco-nav {
