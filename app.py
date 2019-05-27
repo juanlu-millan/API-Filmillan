@@ -58,7 +58,9 @@ def busqueda():
                             else:
                                 listanoimg.append({'titulo':resultado['name'],'id':resultado['id']})
                         return render_template("busqueda.html", lista = lista,listanoimg = listanoimg, seleccion = request.form['selec'] , busqueda = tituloform)
-
+            else:
+                fallo = "Debes introducir algo en la Búsqueda."
+                return render_template("busqueda.html", error = fallo)
 @app.route('/<selec>/<id>')
 def info(id,selec):
     error = None

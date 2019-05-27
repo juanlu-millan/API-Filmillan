@@ -27,7 +27,12 @@
 						<h4 class="titulopeli">{{ i['titulo'] }}</h4></th>
 					</div>
 					{% endfor %}
+					{% if error %}
 				</div>
+				<div>
+					<h2>{{ error }}</h2>
+				</div>
+				{% endif %}
 			</div>
 		</div>
 
