@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
 
-port = os.environ['PORT']
+# port = os.environ['PORT']
 
 language = 'es-ES'
 key = os.environ['key']
@@ -75,12 +75,18 @@ def info(id,selec):
             if acto.status_code == 200:
                 actores = acto.json()
                 reparto = actores['cast']
+                direccion = actores['crew']
                 infoactor = []
+                directorinfo = []
+                print (direccion)
                 for actor in reparto:
                     if actor['profile_path'] != noimg:
                         infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
+                for direc in direccion:
+                    if direc['job'] == 'Director':
+                        directorinfo.append({'director':direc["name"],'fotos':direc['profile_path']})
                 infoactor = infoactor[0:8]
-                return render_template("id.html" , lista = pelisinfo, reparto = infoactor ,  error = error)
+                return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,director = directorinfo ,error = error)
 
     else:
         info = requests.get(URL_BASE_TMDB + 'tv/' + id,  params = payload)
@@ -109,5 +115,5 @@ def contacto():
 def listas():
     return render_template("listas.html")
 
-app.run('0.0.0.0',int(port), debug=True)
-# app.run(debug=True)
+# app.run('0.0.0.0',int(port), debug=True)
+app.run(debug=True)

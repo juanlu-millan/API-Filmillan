@@ -7,11 +7,20 @@
 			<div class="row row-pb-sm">
 				<div class="col-md-12 gtco-heading text-center">
 					<h1>{{ lista['titulo'] }}</h1>
-					<div class="col-md-12 single-film">
+					<div class="col-md-12 single-feature">
 						<td><img src = "https://image.tmdb.org/t/p/w300{{ lista['poster'] }}" class="col-md-4" alt='Poster'></td>
 						<p class="col-md-8">  <strong>Sinopsis:</strong> {{ lista['sinopsis'] }}</p>
-						<h3 class="col-md-8"> <strong>Fecha:</strong> {{ lista['year'] }}</h3>
-						<h3 class="col-md-8"> <strong>Nota Media:</strong> {{ lista['notatmdb'] }}</h3>
+						<h4 class="col-md-8"> <strong>Fecha de estreno:</strong> {{ lista['year'] }}</h4>
+						<h4 class="col-md-8"> <strong>Nota Media:</strong> {{ lista['notatmdb'] }}</h4>
+					</div>
+					<div class="col-md-12">
+						<h3>Dirección</h3>
+						{% for i in director %}
+						<div class="col-md-3 single-feature">
+							<h3>{{ i['director'] }}</h3>
+						<img src = "https://image.tmdb.org/t/p/w300{{ i['fotos'] }}" class="fotoactor" alt='director'>
+						</div>
+						{% endfor %}
 					</div>
 					<div class="col-md-12">
 						<h3>Reparto</h3>
