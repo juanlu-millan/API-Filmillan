@@ -5,7 +5,7 @@ app = Flask(__name__)
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
 URL_BASE_OMDB = 'http://www.omdbapi.com/?s'
 
-# port = os.environ['PORT']
+port = os.environ['PORT']
 
 language = 'es-ES'
 key = os.environ['key']
@@ -159,5 +159,5 @@ def contacto():
 def listas():
     return render_template("listas.html")
 
-# app.run('0.0.0.0',int(port), debug=True)
-app.run(debug=True)
+app.run('0.0.0.0',int(port), debug=True)
+# app.run(debug=True)
