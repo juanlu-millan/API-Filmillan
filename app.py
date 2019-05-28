@@ -3,11 +3,13 @@ import os,requests
 app = Flask(__name__)
 
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
+URL_BASE_OMDB = 'http://www.omdbapi.com/?s'
 
-# port = os.environ['PORT']
+port = os.environ['PORT']
 
 language = 'es-ES'
 key = os.environ['key']
+keyomdb = '78007d7e'
 noimg = None
 
 
@@ -40,7 +42,7 @@ def busqueda():
                         listanoimg = []
                         for resultado in search['results']:
                             if resultado['poster_path'] != noimg:
-                                lista.append({'titulo':resultado['title'],'id':resultado['id'],'poster': resultado['poster_path']})
+                                lista.append({'titulo':resultado['title'],'id':resultado['id'],'fecha':resultado['release_date'],'poster': resultado['poster_path']})
                             else:
                                 listanoimg.append({'titulo':resultado['title'],'id':resultado['id']})
 
@@ -54,14 +56,15 @@ def busqueda():
                         listanoimg = []
                         for resultado in search['results']:
                             if resultado['poster_path'] != noimg:
-                                lista.append({'titulo':resultado['name'],'id':resultado['id'],'poster': resultado['poster_path']})
+                                lista.append({'titulo':resultado['name'],'id':resultado['id'],'fecha':resultado['first_air_date'],'poster': resultado['poster_path']})
                             else:
                                 listanoimg.append({'titulo':resultado['name'],'id':resultado['id']})
                         return render_template("busqueda.html", lista = lista,listanoimg = listanoimg, seleccion = request.form['selec'] , busqueda = tituloform)
             else:
                 fallo = "Debes introducir algo en la Búsqueda."
                 return render_template("busqueda.html", error = fallo)
-@app.route('/<selec>/<id>')
+
+@app.route('/<selec>/<id>',methods = ['GET', 'POST'])
 def info(id,selec):
     error = None
     payload = {'api_key': key,'language': language}
@@ -72,13 +75,20 @@ def info(id,selec):
             pelisinfo = {'titulo':infopeli['title'],'poster':infopeli['poster_path'],'sinopsis':infopeli['overview'],'year':infopeli['release_date'],'notatmdb':infopeli['vote_average']}
             payact = {'api_key': key}
             acto = requests.get(URL_BASE_TMDB + 'movie/' + id +'/credits', params = payact)
-            if acto.status_code == 200:
+
+            paynotas = {'apikey':keyomdb,'y': infopeli['release_date'][0:4],'t':infopeli['original_title'],'type':'movie'}
+            peli = requests.get(URL_BASE_OMDB, params= paynotas )
+            if peli.status_code == 200 and acto.status_code == 200:
+                nota=peli.json()
+                notas = nota['Ratings']
                 actores = acto.json()
                 reparto = actores['cast']
                 direccion = actores['crew']
+
                 infoactor = []
+                puntua = []
                 directorinfo = []
-                print (direccion)
+
                 for actor in reparto:
                     if actor['profile_path'] != noimg:
                         infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
@@ -86,10 +96,13 @@ def info(id,selec):
                     if direc['job'] == 'Director':
                         directorinfo.append({'director':direc["name"],'fotos':direc['profile_path']})
                 infoactor = infoactor[0:8]
-                return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,director = directorinfo ,error = error)
+                for puntuacion in notas:
+                    puntua.append ({'web':puntuacion['Source'],'valor':puntuacion['Value']})
+                return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo ,error = error)
 
     else:
         info = requests.get(URL_BASE_TMDB + 'tv/' + id,  params = payload)
+        # notas = request.get(URL_BASE_OMDB + params= payomdb )
         if info.status_code == 200:
             infoserie = info.json()
             seriesinfo = {'titulo':infoserie['name'],'poster':infoserie['poster_path'],'sinopsis':infoserie['overview'],'year':infoserie['first_air_date'],'notatmdb':infoserie['vote_average']}
@@ -115,5 +128,5 @@ def contacto():
 def listas():
     return render_template("listas.html")
 
-# app.run('0.0.0.0',int(port), debug=True)
-app.run(debug=True)
+app.run('0.0.0.0',int(port), debug=True)
+# app.run(debug=True)
