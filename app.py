@@ -5,7 +5,7 @@ app = Flask(__name__)
 URL_BASE_TMDB = 'https://api.themoviedb.org/3/'
 URL_BASE_OMDB = 'http://www.omdbapi.com/?s'
 
-port = os.environ['PORT']
+# port = os.environ['PORT']
 
 language = 'es-ES'
 key = os.environ['key']
@@ -73,10 +73,63 @@ def info(id,selec):
         if info.status_code == 200:
             infopeli = info.json()
             pelisinfo = {'titulo':infopeli['title'],'poster':infopeli['poster_path'],'sinopsis':infopeli['overview'],'year':infopeli['release_date'],'notatmdb':infopeli['vote_average']}
+            if pelisinfo['sinopsis'] == '':
+                pelisinfo['sinopsis'] = "No hay sinopsis"
             payact = {'api_key': key}
             acto = requests.get(URL_BASE_TMDB + 'movie/' + id +'/credits', params = payact)
 
             paynotas = {'apikey':keyomdb,'y': infopeli['release_date'][0:4],'t':infopeli['original_title'],'type':'movie'}
+            peli = requests.get(URL_BASE_OMDB, params= paynotas )
+            if peli.status_code == 200:
+                nota=peli.json()
+                if nota['Response'] != 'False':
+                    puntua = []
+                    notas = nota['Ratings']
+                    for puntuacion in notas:
+                        puntua.append ({'web':puntuacion['Source'],'valor':puntuacion['Value']})
+                else:
+                    puntua = [error]
+
+
+            if acto.status_code == 200:
+                actores = acto.json()
+                reparto = actores['cast']
+                direccion = actores['crew']
+
+                infoactor = []
+                directorinfo = []
+
+                for actor in reparto:
+                    if actor['profile_path'] != noimg:
+                        infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
+                for direc in direccion:
+                    if direc['job'] == 'Director':
+                        if direc['profile_path'] != noimg:
+                            directorinfo.append({'director':direc["name"],'fotos':direc['profile_path']})
+                        else:
+                            directorinfo.append({'director':direc["name"]})
+                infoactor = infoactor[0:8]
+            return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo ,error = error)
+
+    else:
+        info = requests.get(URL_BASE_TMDB + 'tv/' + id,  params = payload)
+        if info.status_code == 200:
+            infoserie = info.json()
+            seriesinfo = {'titulo':infoserie['name'],'poster':infoserie['poster_path'],'sinopsis':infoserie['overview'],'year':infoserie['first_air_date'],'notatmdb':infoserie['vote_average']}
+            payact = {'api_key': key}
+            acto = requests.get(URL_BASE_TMDB + 'tv/' + id +'/credits', params = payact)
+            # if acto.status_code == 200:
+            #     actores = acto.json()
+            #     reparto = actores['cast']
+            #     infoactor = []
+            #     for actor in reparto:
+            #         if actor['profile_path'] != noimg:
+            #             infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
+            #     infoactor = infoactor[0:8]
+            #     return render_template("id.html" , lista = seriesinfo, reparto = infoactor ,  error = error)
+
+
+            paynotas = {'apikey':keyomdb,'y': infoserie['first_air_date'][0:4],'t':infoserie['original_name'],'type':'series'}
             peli = requests.get(URL_BASE_OMDB, params= paynotas )
             if peli.status_code == 200 and acto.status_code == 200:
                 nota=peli.json()
@@ -92,32 +145,10 @@ def info(id,selec):
                 for actor in reparto:
                     if actor['profile_path'] != noimg:
                         infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
-                for direc in direccion:
-                    if direc['job'] == 'Director':
-                        directorinfo.append({'director':direc["name"],'fotos':direc['profile_path']})
                 infoactor = infoactor[0:8]
                 for puntuacion in notas:
                     puntua.append ({'web':puntuacion['Source'],'valor':puntuacion['Value']})
-                return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo ,error = error)
-
-    else:
-        info = requests.get(URL_BASE_TMDB + 'tv/' + id,  params = payload)
-        # notas = request.get(URL_BASE_OMDB + params= payomdb )
-        if info.status_code == 200:
-            infoserie = info.json()
-            seriesinfo = {'titulo':infoserie['name'],'poster':infoserie['poster_path'],'sinopsis':infoserie['overview'],'year':infoserie['first_air_date'],'notatmdb':infoserie['vote_average']}
-            payact = {'api_key': key}
-            acto = requests.get(URL_BASE_TMDB + 'tv/' + id +'/credits', params = payact)
-            if acto.status_code == 200:
-                actores = acto.json()
-                reparto = actores['cast']
-                infoactor = []
-                for actor in reparto:
-                    if actor['profile_path'] != noimg:
-                        infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
-                infoactor = infoactor[0:8]
-                return render_template("id.html" , lista = seriesinfo, reparto = infoactor ,  error = error)
-
+                return render_template("id.html" ,lista = seriesinfo ,reparto = infoactor ,puntuacion=puntua ,error = error)
 
 
 @app.route('/contacto')
@@ -128,5 +159,5 @@ def contacto():
 def listas():
     return render_template("listas.html")
 
-app.run('0.0.0.0',int(port), debug=True)
-# app.run(debug=True)
+# app.run('0.0.0.0',int(port), debug=True)
+app.run(debug=True)
