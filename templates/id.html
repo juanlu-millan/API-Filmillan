@@ -14,7 +14,9 @@
 						{% for i in director %}
 						<div class="col-md-4">
 							<h4><strong>Director</strong></h4>
+							{% if i['fotos'] == noimg %}
 							<img src = "https://image.tmdb.org/t/p/w300{{ i['fotos'] }}" class="fotoactor" alt='director'>
+							{% endif%}
 							<h4>{{ i['director'] }}</h4>
 						</div>
 						{% endfor %}

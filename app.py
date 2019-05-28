@@ -109,7 +109,7 @@ def info(id,selec):
                         else:
                             directorinfo.append({'director':direc["name"]})
                 infoactor = infoactor[0:8]
-            return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo ,error = error)
+            return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo, noimg=noimg ,error = error)
 
     else:
         info = requests.get(URL_BASE_TMDB + 'tv/' + id,  params = payload)
@@ -118,7 +118,7 @@ def info(id,selec):
             seriesinfo = {'titulo':infoserie['name'],'poster':infoserie['poster_path'],'sinopsis':infoserie['overview'],'year':infoserie['first_air_date'],'notatmdb':infoserie['vote_average']}
             payact = {'api_key': key}
             acto = requests.get(URL_BASE_TMDB + 'tv/' + id +'/credits', params = payact)
-    
+
 
             paynotas = {'apikey':keyomdb,'y': infoserie['first_air_date'][0:4],'t':infoserie['original_name'],'type':'series'}
             peli = requests.get(URL_BASE_OMDB, params= paynotas )
