@@ -9,7 +9,7 @@ port = os.environ['PORT']
 
 language = 'es-ES'
 key = os.environ['key']
-keyomdb = '78007d7e'
+keyomdb = os.environ['keyomdb']
 noimg = None
 
 
@@ -118,16 +118,7 @@ def info(id,selec):
             seriesinfo = {'titulo':infoserie['name'],'poster':infoserie['poster_path'],'sinopsis':infoserie['overview'],'year':infoserie['first_air_date'],'notatmdb':infoserie['vote_average']}
             payact = {'api_key': key}
             acto = requests.get(URL_BASE_TMDB + 'tv/' + id +'/credits', params = payact)
-            # if acto.status_code == 200:
-            #     actores = acto.json()
-            #     reparto = actores['cast']
-            #     infoactor = []
-            #     for actor in reparto:
-            #         if actor['profile_path'] != noimg:
-            #             infoactor.append({'actores':actor["name"],'fotos':actor['profile_path']})
-            #     infoactor = infoactor[0:8]
-            #     return render_template("id.html" , lista = seriesinfo, reparto = infoactor ,  error = error)
-
+    
 
             paynotas = {'apikey':keyomdb,'y': infoserie['first_air_date'][0:4],'t':infoserie['original_name'],'type':'series'}
             peli = requests.get(URL_BASE_OMDB, params= paynotas )
@@ -154,10 +145,6 @@ def info(id,selec):
 @app.route('/contacto')
 def contacto():
     return render_template("contact.html")
-
-@app.route('/listas')
-def listas():
-    return render_template("listas.html")
 
 app.run('0.0.0.0',int(port), debug=True)
 # app.run(debug=True)
