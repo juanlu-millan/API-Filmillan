@@ -14,12 +14,18 @@
 						{% for i in director %}
 						<div class="col-md-4">
 							<h4><strong>Director</strong></h4>
-							{% if i['fotos'] != noimg %}
-								<img src = "https://image.tmdb.org/t/p/w300{{ i['fotos'] }}" class="fotoactor" alt='director'>
-							{% endif%}
+							<img src = "https://image.tmdb.org/t/p/w300{{ i['fotos'] }}" class="fotoactor" alt='director'>
 							<h4>{{ i['director'] }}</h4>
 						</div>
 						{% endfor %}
+						{% for i in directornoimg %}
+						<div class="col-md-4">
+							<h4><strong>Director</strong></h4>
+							<h4>{{ i['director'] }}</h4>
+						</div>
+						{% endfor %}
+
+
 					</div>
 
 					<div class="col-md-12">

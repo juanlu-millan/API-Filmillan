@@ -18,8 +18,8 @@
         	</form>
 					{% for i in lista %}
 					<div class="col-md-4 single-feature">
-						<a  class= titulopeli href="/{{ seleccion }}/{{ i['id'] }}">{{ i['titulo'] }}</a>
-						<a  class= titulopeli href="/{{ seleccion }}/{{ i['id'] }}"><img src = "https://image.tmdb.org/t/p/w300{{ i['poster'] }}" class="fototamanio" alt='Poster'></a>
+						<a  class= "titulopeli" href="/{{ seleccion }}/{{ i['id'] }}">{{ i['titulo'] }}</a>
+						<a  class= "titulopeli" href="/{{ seleccion }}/{{ i['id'] }}"><img src = "https://image.tmdb.org/t/p/w300{{ i['poster'] }}" class="fototamanio" alt='Poster'></a>
 					</div>
 					{% endfor %}
 					{% for i in listanoimg %}

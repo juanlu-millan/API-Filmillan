@@ -23,7 +23,6 @@ def inicio():
         lista = []
         for i in cart['results']:
             lista.append({'titulo':i['title'],'poster': i['poster_path'],'id':i['id']})
-            # info(int(i['id']),"pelicula")
         return render_template('index.html', lista = lista)
 
 @app.route('/busqueda', methods = ['GET', 'POST'])
@@ -88,8 +87,7 @@ def info(id,selec):
                     for puntuacion in notas:
                         puntua.append ({'web':puntuacion['Source'],'valor':puntuacion['Value']})
                 else:
-                    puntua = [error]
-
+                    puntua = [{'web':"No hay más votaciones"}]
 
             if acto.status_code == 200:
                 actores = acto.json()
@@ -98,6 +96,7 @@ def info(id,selec):
 
                 infoactor = []
                 directorinfo = []
+                directornoimg = []
 
                 for actor in reparto:
                     if actor['profile_path'] != noimg:
@@ -107,9 +106,9 @@ def info(id,selec):
                         if direc['profile_path'] != noimg:
                             directorinfo.append({'director':direc["name"],'fotos':direc['profile_path']})
                         else:
-                            directorinfo.append({'director':direc["name"]})
+                            directornoimg.append({'director':direc["name"]})
                 infoactor = infoactor[0:8]
-            return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo, noimg=noimg ,error = error)
+            return render_template("id.html" ,lista = pelisinfo ,reparto = infoactor ,puntuacion=puntua ,director = directorinfo, directornoimg=directornoimg ,error = error)
 
     else:
         info = requests.get(URL_BASE_TMDB + 'tv/' + id,  params = payload)
