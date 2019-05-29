@@ -63,7 +63,7 @@ def busqueda():
                 fallo = "Debes introducir algo en la Búsqueda."
                 return render_template("busqueda.html", error = fallo)
 
-@app.route('/<selec>/<id>',methods = ['GET', 'POST'])
+@app.route('/<selec>/<id>',methods = ['GET'])
 def info(id,selec):
     error = None
     payload = {'api_key': key,'language': language}
